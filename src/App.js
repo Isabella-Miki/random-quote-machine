@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function App() {
-  const [quote, setQuote] = useState("Click to generate a random quote");
+  const [quote, setQuote] = useState("Pipoca é a resposta para tudo!");
 
   const getQuote = () => {
     fetch("https://type.fit/api/quotes")
@@ -11,7 +11,6 @@ export default function App() {
       .then((data) => {
         let randomNumData = Math.floor(Math.random() * data.length);
         setQuote(data[randomNumData]);
-        console.log(quote)
       });
   };
 
@@ -39,14 +38,6 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    getQuote();
-  }, []);
-
-  useEffect(() => {
-    getColor();
-  }, []);
-
   const getQuoteAndColor = () => {
     getColor();
     getQuote();
@@ -69,15 +60,14 @@ export default function App() {
         transform: scale(1.1, 1.1);
         transition: 0.4s;
       }
-
   `;
 
   return (
     <Wrapper className={`grid content-center justify-center h-screen text-2xl`}>
       <div className="p-8 rounded bg-white max-w-md">
         <div>
-          <p className="text-justify">{quote.text}</p>
-          <p className="mt-3 text-right text-xl">- {quote.author !== null ? quote.author : 'Pipoca'}</p>
+          <p className="text-justify">{quote.text === undefined ? quote : quote.text}</p>
+          <p className="mt-3 text-right text-xl">- {quote.author !== null ? quote.author : 'anonymous'}</p>
         </div>
         <div className="flex justify-between mt-5">
           <Button>
